@@ -25,8 +25,8 @@ You are building a Django + Django REST Framework (DRF) backend that will serve 
 5. Ensure `.env.example` exists with the following placeholders:
    - `SECRET_KEY`
    - `DEBUG=True`
-   (Note: SQLite will be used for development, so no database URL is required.)
-6. Configure Django `settings.py` to use **SQLite 3** for development:
+   (Note: SQLite will be used for development, so no database URL is required in the example file. For staging/production deployments, set `DATABASE_URL` to point to the PostgreSQL instance.)
+6. Configure Django `settings.py` to use **SQLite 3** for development, while allowing `DATABASE_URL` (PostgreSQL) to override in production:
    ```python
    DATABASES = {
        "default": {
@@ -44,4 +44,3 @@ Rules:
 - Do not write all endpoints yet; just create project skeleton and documentation files.
 
 When done, print the folder tree and short summary of each major file.
-
