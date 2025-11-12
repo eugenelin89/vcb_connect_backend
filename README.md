@@ -20,6 +20,16 @@ This backend powers the VCB mobile app, enabling:
   - `games/` – game results and point rewards
   - `shop/` – store items, redemptions
   - `points/` – transactions, streaks, badges
+- DRF ViewSets + Routers for every public resource (see `API.md` for endpoint coverage)
+- JWT auth via `djangorestframework-simplejwt` keeps parity with the Swift client’s `Authorization: Bearer <token>` header
+
+## Repository Structure
+- `manage.py` – Django management entry point.
+- `vcb_backend/` – project settings, ASGI/WSGI bootstraps, root URL router.
+- `accounts/`, `leagues/`, `volunteers/`, `games/`, `shop/`, `points/` – feature apps with models/serializers/views/urls following DRF conventions.
+- `API.md`, `AGENTS.md`, `CODEX_PROMPT.md`, `architecture.md`, `CONTRIBUTING.md` – documentation + collaboration contracts (update when new modules/endpoints appear).
+- `.env.example` – starter environment variables (`SECRET_KEY`, `DEBUG`) copied to `.env`.
+- `requirements.txt` – pinned backend dependencies; re-run `pip install -r requirements.txt` after edits.
 
 ## Auth
 - JWT via `djangorestframework-simplejwt`
@@ -51,7 +61,7 @@ All endpoints are under `/api/`.
 6. Run the dev server: `python manage.py runserver`
 7. (Optional) Create an admin user for local testing: `python manage.py createsuperuser`
 
--## Viewing the REST Interface
+## Viewing the REST Interface
 - **Browsable API:** Once `python manage.py runserver` is running, open `http://127.0.0.1:8000/api/` in a browser. DRF ships its browsable interface by default, so each placeholder endpoint (accounts, leagues, etc.) renders interactive JSON forms. Use the “Login” link in the top-right (wired via `/api/auth/login/`) to authenticate with your Django credentials; you’ll be redirected back to `/api/` on success and subsequent requests use the session cookie.
 - **Swagger UI:** Visit `http://127.0.0.1:8000/api/docs/` for an interactive OpenAPI explorer backed by `drf-spectacular`. The raw schema (JSON) is available at `http://127.0.0.1:8000/api/schema/` if you need to import it into Postman or other tooling.
 - **Auth endpoints:** `http://127.0.0.1:8000/api/token/` provides a simple form to obtain JWTs; POSTing valid credentials returns access/refresh tokens. Include `Authorization: Bearer <token>` in subsequent requests (set headers manually or via Postman’s auth helpers). Browser sessions already authenticated through `/api/auth/login/` also work because DRF SessionAuthentication is enabled.
